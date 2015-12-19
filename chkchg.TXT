@@ -1,0 +1,32 @@
+ 
+              CHKCHG Copyright (C) 1993 Dimitri Vulis DLV@DM.COM
+ 
+When OS/2 reads data (such as the root directory or the file allocation table)
+from a diskette, and needs to refer to it again soon (e.g., to open another
+file), it may not have to re-read it if the same diskette is still in the drive
+and the data is still in the memory buffer. To determine whether the diskette
+has been changed, OS/2 uses the hardware feature called "diskette change line".
+Under normal circumstances, if the disk drive has been opened and closed and
+therefore the diskette may have been changed, the diskette drive tells the OS
+on a subsequent read that the diskette may have been changed, and the OS will
+know the data in memory buffers cannot be reused and must be re-read.
+ 
+Unfortunately, this mechanism does not work correctly on some clones. Sometimes
+the drive fails to report that the diskette has been changed. With two
+drives, sometimes a media change is reported on the wrong drive. Sometimes no
+media change is reported when it fact there's no media in the drive and the
+drive is not ready. This is also a malfunction, but it seems not to cause
+problems for OS/2. OS/2 is also more sensitive than DOS to the drive
+incorrectly identified in CMOS configuration (e.g., 1.2MB instead of 1.44MB).
+ 
+If OS/2 assumes that a diskette has not been changed, when it fact it has, data
+may be lost. For example, the root directory or the file allocation table of
+the previously inserted diskette may be written into the new diskette.
+ 
+The program CHKCHG will report the diskette change status returned to the
+operating system by the diskette drive. You can open and close your drives and
+see whether the program's output corresponds to what is happening in reality.
+ 
+USAGE: enter chkchg at a DOS command line (any kind). It reports the current
+status of your floppy drives. Open and close them and rerun to test.
+
